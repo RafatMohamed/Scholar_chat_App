@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:scholar_chat_proj/core/constants/app_constant.dart';
+
+import 'features/login/views/login_view.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ChatApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
+class ChatApp extends StatelessWidget {
+  const ChatApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: AppConstant.appName,
       theme: ThemeData(
-        fontFamily: "Pacifico",
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        scaffoldBackgroundColor: AppConstant.primaryColor,
       ),
-      home: const Placeholder(),
+      home: const LoginView(),
     );
   }
 }
