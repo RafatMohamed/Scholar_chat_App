@@ -21,7 +21,7 @@ class TextFormFieldApp extends StatelessWidget {
     this.textInputAction = TextInputAction.done,
     this.borderDecorationColor = Colors.green,
     this.validator,
-    required this.onFieldSubmitted,
+    required this.onSubmitted,
     required this.controller,
   });
 
@@ -43,7 +43,7 @@ class TextFormFieldApp extends StatelessWidget {
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final FormFieldValidator? validator;
-  final Function(String) onFieldSubmitted;
+  final Function(String) onSubmitted;
   final TextEditingController controller;
 
   @override
@@ -63,8 +63,8 @@ class TextFormFieldApp extends StatelessWidget {
         enableSuggestions: true,
         validator: validator,
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        // controller: controller,
-        onFieldSubmitted: onFieldSubmitted,
+        controller: controller,
+        onFieldSubmitted: onSubmitted,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           floatingLabelAlignment: FloatingLabelAlignment.start,

@@ -1,11 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:scholar_chat_proj/core/constants/app_constant.dart';
+import 'package:scholar_chat_proj/features/chat/views/chat_view.dart';
 
 import 'features/login/views/login_view.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform, // Make sure this file is set up correctly
+  );
   runApp(const ChatApp());
 }
+
 
 class ChatApp extends StatelessWidget {
   const ChatApp({super.key});
@@ -14,6 +22,9 @@ class ChatApp extends StatelessWidget {
     return MaterialApp(
       title: AppConstant.appName,
       theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          color: AppConstant.primaryColor,
+        ),
         textTheme: TextTheme(
           bodyMedium: TextStyle(
             color: Colors.white,
