@@ -7,11 +7,15 @@ class LoginState {}
 final class LoginInitial extends LoginState {}
 final class LoginLoading extends LoginState {}
 final class LoginSuccess extends LoginState {
- LoginModel loginModel;
+final LoginModel loginModel;
  LoginSuccess({required this.loginModel});
 }
 final class LoginError extends LoginState {
-  String error;
+ final String error;
 
   LoginError({required this.error});
+}
+final class LoginChangePasswordVisibility extends LoginState {
+ final bool passwordVisibility;
+  LoginChangePasswordVisibility({required this.passwordVisibility});
 }

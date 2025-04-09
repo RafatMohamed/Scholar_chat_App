@@ -14,3 +14,8 @@ final class RegisterError extends RegisterState {
 
   RegisterError({required this.error});
 }
+final class RegChangePasswordVisibility extends RegisterState {
+  final bool passwordVisibility;
+
+    RegChangePasswordVisibility({required this.passwordVisibility});
+}

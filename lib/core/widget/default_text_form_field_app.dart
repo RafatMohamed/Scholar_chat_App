@@ -23,8 +23,10 @@ class TextFormFieldApp extends StatelessWidget {
     this.validator,
     required this.onSubmitted,
     required this.controller,
+    this.obscureText=false,
+    this.suffixIcon,
   });
-
+ final bool obscureText;
   final int maxLine;
   final Color borderDecorationColor;
   final String hintText;
@@ -45,6 +47,7 @@ class TextFormFieldApp extends StatelessWidget {
   final FormFieldValidator? validator;
   final Function(String) onSubmitted;
   final TextEditingController controller;
+  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +65,12 @@ class TextFormFieldApp extends StatelessWidget {
       child: TextFormField(
         enableSuggestions: true,
         validator: validator,
+        obscureText: obscureText,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: controller,
         onFieldSubmitted: onSubmitted,
         decoration: InputDecoration(
+          suffixIcon: suffixIcon,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           floatingLabelAlignment: FloatingLabelAlignment.start,
           border: InputBorder.none,

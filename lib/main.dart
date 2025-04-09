@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:scholar_chat_proj/core/constants/app_constant.dart';
-import 'package:scholar_chat_proj/features/chat/views/chat_view.dart';
 
 import 'features/login/views/login_view.dart';
 import 'firebase_options.dart';
