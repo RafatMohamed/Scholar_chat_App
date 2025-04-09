@@ -27,7 +27,7 @@ class RegisterView extends StatelessWidget {
           return Scaffold(
             body: Center(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding:  EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.017),
                 child: SingleChildScrollView(
                   child: Form(
                     key: cubit.formKey,

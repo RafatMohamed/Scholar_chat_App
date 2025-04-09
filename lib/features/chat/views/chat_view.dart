@@ -7,16 +7,28 @@ import '../../../core/widget/chat_bubble_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../data/chat_model.dart';
 
-class ChatView extends StatelessWidget {
+class ChatView extends StatefulWidget {
   const ChatView({super.key, required this.email});
   final String email;
   static final ChatService chatService = ChatService();
+
+  @override
+  State<ChatView> createState() => _ChatViewState();
+}
+
+class _ChatViewState extends State<ChatView> {
+  @override
+  void dispose() {
+    ChatView.chatService.scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final username = email.split('@')[0];
+    final username = widget.email.split('@')[0];
     final Radius border = Radius.circular(20);
     return StreamBuilder<QuerySnapshot>(
-      stream: chatService.stream,
+      stream: ChatView.chatService.stream,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Something went wrong');
@@ -28,6 +40,19 @@ class ChatView extends StatelessWidget {
         for (int i = 0; i < snapshot.data!.docs.length; i++) {
           chatList.add(ChatModel.fromJson(snapshot.data!.docs[i]));
         }
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (ChatView.chatService.scrollController.hasClients) {
+            Future.delayed(const Duration(seconds: 10)).then((value) {
+              ChatView.chatService.scrollController.animateTo(
+                ChatView.chatService.scrollController.position.maxScrollExtent,
+                duration: const Duration(seconds: 2),
+                curve: Curves.fastOutSlowIn,
+              );
+            });
+
+          }
+
+        });
         return  SafeArea(
           child: Scaffold(
             resizeToAvoidBottomInset: true,
@@ -86,24 +111,24 @@ class ChatView extends StatelessWidget {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: ListView.builder(
-                        key: chatService.listKey,
-                        controller: chatService.scrollController,
+                        key: ChatView.chatService.listKey,
+                        controller: ChatView.chatService.scrollController,
                         itemCount: chatList.length,
                         itemBuilder: (context, index,) {
                           return AnimatedBuilder(
-                              animation: chatService.scrollController,
+                              animation: ChatView.chatService.scrollController,
                               builder:(context, child) {
                               return ChatBubble(
                                 border: border,
                                 textSend: chatList[index],
-                                isMe: chatList[index].email == email,
+                                isMe: chatList[index].email == widget.email,
                               );
                             }
                           );
                         },
-                        physics: BouncingScrollPhysics(),
+                        physics: ClampingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                       ),
                     ),
@@ -120,11 +145,11 @@ class ChatView extends StatelessWidget {
                       children: [
                         Expanded(
                           child: TextFormField(
-                            controller: chatService.messageController,
+                            controller: ChatView.chatService.messageController,
                             onFieldSubmitted: (value) {
                               if (value.trim().isNotEmpty) {
-                                chatService.sendMessage(messageReq: value.trim(), email: email);
-                                chatService.messageController.clear();
+                                ChatView.chatService.sendMessage(messageReq: value.trim(), email: widget.email);
+                                ChatView.chatService.messageController.clear();
                               }
                             },
                             style: TextStyle(color: AppConstant.primaryColor),
@@ -143,16 +168,17 @@ class ChatView extends StatelessWidget {
                         IconButton(
                           onPressed: () {
                             FocusManager.instance.primaryFocus?.unfocus();
-                            final text = chatService.messageController.text.trim();
+                            final text = ChatView.chatService.messageController.text.trim();
                             if (text.isNotEmpty) {
-                              chatService.sendMessage(messageReq: text, email: email);
-                              chatService.messageController.clear();
+                              ChatView.chatService.sendMessage(messageReq: text, email: widget.email);
+                              ChatView.chatService.messageController.clear();
+                              ChatView.chatService.scrollController.animateTo(
+                                  ChatView.chatService.scrollController.position.maxScrollExtent.toDouble()+100,
+                                  duration: Duration(milliseconds: 400),
+                                  curve: Curves.bounceInOut
+                              );
                             }
-                            chatService.scrollController.animateTo(
-                                chatService.scrollController.position.maxScrollExtent ,
-                                duration: Duration(milliseconds: 400),
-                                curve: Curves.slowMiddle
-                            );
+
                           },
                           icon: const Icon(
                             Icons.send,

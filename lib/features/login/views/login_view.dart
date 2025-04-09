@@ -34,7 +34,7 @@ class LoginView extends StatelessWidget {
                 key: cubit.formKey,
                 child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding:  EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.017),
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
