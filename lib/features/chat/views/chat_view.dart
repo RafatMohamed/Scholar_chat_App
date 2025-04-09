@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scholar_chat_proj/core/constants/app_constant.dart';
 import 'package:scholar_chat_proj/features/chat/model/chat_service.dart';
-
 import '../../../core/helper/notify_app.dart';
 import '../../../core/widget/chat_bubble_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,7 +35,7 @@ class _ChatViewState extends State<ChatView> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return NotifyApp.circularProgress();
         }
-        List <ChatModel> chatList =[];
+        List<ChatModel> chatList = [];
         for (int i = 0; i < snapshot.data!.docs.length; i++) {
           chatList.add(ChatModel.fromJson(snapshot.data!.docs[i]));
         }
@@ -49,11 +48,9 @@ class _ChatViewState extends State<ChatView> {
                 curve: Curves.fastOutSlowIn,
               );
             });
-
           }
-
         });
-        return  SafeArea(
+        return SafeArea(
           child: Scaffold(
             resizeToAvoidBottomInset: true,
             body: Container(
@@ -67,9 +64,7 @@ class _ChatViewState extends State<ChatView> {
               child: Column(
                 children: [
                   Container(
-                    decoration: BoxDecoration(
-                      color: AppConstant.primaryColor,
-                    ),
+                    decoration: BoxDecoration(color: AppConstant.primaryColor),
                     child: Row(
                       children: [
                         SizedBox(width: 8),
@@ -116,16 +111,16 @@ class _ChatViewState extends State<ChatView> {
                         key: ChatView.chatService.listKey,
                         controller: ChatView.chatService.scrollController,
                         itemCount: chatList.length,
-                        itemBuilder: (context, index,) {
+                        itemBuilder: (context, index) {
                           return AnimatedBuilder(
-                              animation: ChatView.chatService.scrollController,
-                              builder:(context, child) {
+                            animation: ChatView.chatService.scrollController,
+                            builder: (context, child) {
                               return ChatBubble(
                                 border: border,
                                 textSend: chatList[index],
                                 isMe: chatList[index].email == widget.email,
                               );
-                            }
+                            },
                           );
                         },
                         physics: ClampingScrollPhysics(),
@@ -148,7 +143,10 @@ class _ChatViewState extends State<ChatView> {
                             controller: ChatView.chatService.messageController,
                             onFieldSubmitted: (value) {
                               if (value.trim().isNotEmpty) {
-                                ChatView.chatService.sendMessage(messageReq: value.trim(), email: widget.email);
+                                ChatView.chatService.sendMessage(
+                                  messageReq: value.trim(),
+                                  email: widget.email,
+                                );
                                 ChatView.chatService.messageController.clear();
                               }
                             },
@@ -168,17 +166,27 @@ class _ChatViewState extends State<ChatView> {
                         IconButton(
                           onPressed: () {
                             FocusManager.instance.primaryFocus?.unfocus();
-                            final text = ChatView.chatService.messageController.text.trim();
+                            final text =
+                                ChatView.chatService.messageController.text
+                                    .trim();
                             if (text.isNotEmpty) {
-                              ChatView.chatService.sendMessage(messageReq: text, email: widget.email);
+                              ChatView.chatService.sendMessage(
+                                messageReq: text,
+                                email: widget.email,
+                              );
                               ChatView.chatService.messageController.clear();
                               ChatView.chatService.scrollController.animateTo(
-                                  ChatView.chatService.scrollController.position.maxScrollExtent.toDouble()+100,
-                                  duration: Duration(milliseconds: 400),
-                                  curve: Curves.bounceInOut
+                                ChatView
+                                        .chatService
+                                        .scrollController
+                                        .position
+                                        .maxScrollExtent
+                                        .toDouble() +
+                                    100,
+                                duration: Duration(milliseconds: 400),
+                                curve: Curves.bounceInOut,
                               );
                             }
-
                           },
                           icon: const Icon(
                             Icons.send,
@@ -197,4 +205,3 @@ class _ChatViewState extends State<ChatView> {
     );
   }
 }
-

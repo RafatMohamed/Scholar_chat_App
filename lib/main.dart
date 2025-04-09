@@ -8,11 +8,12 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform, // Make sure this file is set up correctly
+    options:
+        DefaultFirebaseOptions
+            .currentPlatform, // Make sure this file is set up correctly
   );
   runApp(const ChatApp());
 }
-
 
 class ChatApp extends StatelessWidget {
   const ChatApp({super.key});
@@ -21,18 +22,11 @@ class ChatApp extends StatelessWidget {
     return MaterialApp(
       title: AppConstant.appName,
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          color: AppConstant.primaryColor,
-        ),
-        textTheme: TextTheme(
-          bodyMedium: TextStyle(
-            color: Colors.white,
-          ),
-        ),
+        appBarTheme: AppBarTheme(color: AppConstant.primaryColor),
+        textTheme: TextTheme(bodyMedium: TextStyle(color: Colors.white)),
         scaffoldBackgroundColor: AppConstant.primaryColor,
       ),
       home: const LoginView(),
     );
   }
 }
-

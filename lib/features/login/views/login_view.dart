@@ -25,7 +25,7 @@ class LoginView extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final cubit = LoginCubit.get(context);
-          return RefreshIndicator (
+          return RefreshIndicator(
             onRefresh: () {
               return cubit.onRefresh();
             },
@@ -34,7 +34,9 @@ class LoginView extends StatelessWidget {
                 key: cubit.formKey,
                 child: Center(
                   child: Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.017),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.sizeOf(context).width * 0.017,
+                    ),
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -103,7 +105,8 @@ class LoginView extends StatelessWidget {
                                   }
                                   return DefaultMaterialButton(
                                     onPressed: () {
-                                      if (cubit.formKey.currentState!.validate()) {
+                                      if (cubit.formKey.currentState!
+                                          .validate()) {
                                         cubit.login(
                                           loginModel: LoginModel(
                                             email: cubit.emailController.text,

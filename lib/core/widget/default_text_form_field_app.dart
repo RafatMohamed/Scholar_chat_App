@@ -23,10 +23,10 @@ class TextFormFieldApp extends StatelessWidget {
     this.validator,
     required this.onSubmitted,
     required this.controller,
-    this.obscureText=false,
+    this.obscureText = false,
     this.suffixIcon,
   });
- final bool obscureText;
+  final bool obscureText;
   final int maxLine;
   final Color borderDecorationColor;
   final String hintText;
@@ -55,10 +55,7 @@ class TextFormFieldApp extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(radius),
-        border: Border.all(
-          color: Colors.white,
-          width: 2,
-        ),
+        border: Border.all(color: Colors.white, width: 2),
       ),
       padding: const EdgeInsets.all(8),
       width: double.infinity,

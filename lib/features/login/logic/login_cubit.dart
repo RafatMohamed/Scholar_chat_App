@@ -8,20 +8,21 @@ import '../data/model.dart';
 import 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() :  super(LoginInitial());
-   bool obscureText = true;
+  LoginCubit() : super(LoginInitial());
+  bool obscureText = true;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-   final GlobalKey<FormState> formKey = GlobalKey();
+  final GlobalKey<FormState> formKey = GlobalKey();
   static LoginCubit get(context) => BlocProvider.of(context);
 
   void resetLoginState() {
     emit(LoginInitial());
   }
+
   Future<void> onRefresh() {
-      emailController.clear();
-      passwordController.clear();
-      return Future.value();
+    emailController.clear();
+    passwordController.clear();
+    return Future.value();
   }
 
   Future<void> login({required LoginModel loginModel}) async {
@@ -34,7 +35,9 @@ class LoginCubit extends Cubit<LoginState> {
         email: email,
         password: password,
       );
-      emit(LoginSuccess(loginModel: LoginModel(email: email, password: password)));
+      emit(
+        LoginSuccess(loginModel: LoginModel(email: email, password: password)),
+      );
     } on FirebaseAuthException catch (e) {
       log(e.message ?? 'FirebaseAuth error');
       switch (e.code) {
@@ -45,7 +48,11 @@ class LoginCubit extends Cubit<LoginState> {
           emit(LoginError(error: "Incorrect password."));
           break;
         case 'invalid-credential':
-          emit(LoginError(error: "Invalid email or password. Please check and try again."));
+          emit(
+            LoginError(
+              error: "Invalid email or password. Please check and try again.",
+            ),
+          );
           break;
         case 'invalid-email':
           emit(LoginError(error: "The email address is badly formatted."));
@@ -57,7 +64,12 @@ class LoginCubit extends Cubit<LoginState> {
           emit(LoginError(error: "Too many login attempts. Try again later."));
           break;
         default:
-          emit(LoginError(error: e.message ?? "Authentication failed. Please try again later."));
+          emit(
+            LoginError(
+              error:
+                  e.message ?? "Authentication failed. Please try again later.",
+            ),
+          );
       }
     } catch (e) {
       log('General error: $e');
@@ -71,10 +83,9 @@ class LoginCubit extends Cubit<LoginState> {
     passwordController.dispose();
     return super.close();
   }
+
   void changePasswordVisibility() {
     obscureText = !obscureText;
     emit(LoginChangePasswordVisibility(passwordVisibility: obscureText));
   }
 }
-
-

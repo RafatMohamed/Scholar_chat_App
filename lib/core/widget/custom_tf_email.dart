@@ -7,10 +7,7 @@ import 'default_text_form_field_app.dart';
 Widget customTextFormEmailLogin(context) {
   final cubit = LoginCubit.get(context);
   return TextFormFieldApp(
-    suffixIcon: const Icon(
-      Icons.email,
-      color: Colors.white,
-    ),
+    suffixIcon: const Icon(Icons.email, color: Colors.white),
     validator: (value) {
       if (value == null || value.isEmpty) {
         return "Please enter your email";
@@ -29,13 +26,11 @@ Widget customTextFormEmailLogin(context) {
     controller: cubit.emailController,
   );
 }
+
 Widget customTextFormEmailRegister(context) {
   final cubit = RegisterCubit.get(context);
   return TextFormFieldApp(
-    suffixIcon: const Icon(
-      Icons.email,
-      color: Colors.white,
-    ),
+    suffixIcon: const Icon(Icons.email, color: Colors.white),
     validator: (value) {
       if (value == null || value.isEmpty) {
         return "Please enter your email";

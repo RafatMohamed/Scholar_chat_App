@@ -9,33 +9,34 @@ class ChatBubble extends StatelessWidget {
     super.key,
     required this.border,
     required this.textSend,
-    this.isMe =true,
+    this.isMe = true,
     this.color = AppConstant.primaryColor,
     this.alignmentDirectional = AlignmentDirectional.centerEnd,
   });
 
   final Radius border;
   final ChatModel textSend;
-  final bool isMe ;
-  final Color color ;
-  final AlignmentGeometry alignmentDirectional ;
+  final bool isMe;
+  final Color color;
+  final AlignmentGeometry alignmentDirectional;
   @override
   Widget build(BuildContext context) {
-    final sizeWidth=MediaQuery.sizeOf(context).width;
+    final sizeWidth = MediaQuery.sizeOf(context).width;
     return Column(
       children: [
         Align(
-          alignment:isMe? alignmentDirectional:AlignmentDirectional.centerStart,
+          alignment:
+              isMe ? alignmentDirectional : AlignmentDirectional.centerStart,
           child: Container(
-            constraints: BoxConstraints(maxWidth:sizeWidth*0.6),
-            padding: EdgeInsetsDirectional.all( 16,),
+            constraints: BoxConstraints(maxWidth: sizeWidth * 0.6),
+            padding: EdgeInsetsDirectional.all(16),
             decoration: BoxDecoration(
-              color:isMe? color:Color(0xff006D84),
+              color: isMe ? color : Color(0xff006D84),
               borderRadius: BorderRadiusDirectional.only(
                 topEnd: border,
                 topStart: border,
-                bottomEnd:isMe? Radius.zero: border,
-                bottomStart: isMe ?border: Radius.zero,
+                bottomEnd: isMe ? Radius.zero : border,
+                bottomStart: isMe ? border : Radius.zero,
               ),
             ),
             child: Column(
@@ -49,14 +50,13 @@ class ChatBubble extends StatelessWidget {
                 const SizedBox(height: 5),
                 Text(
                   textSend.timestamp != null
-                      ? timeago.format(textSend.timestamp!.toDate(),locale: 'en_short')
+                      ? timeago.format(
+                        textSend.timestamp!.toDate(),
+                        locale: 'en_short',
+                      )
                       : "just now",
-                  style: TextStyle(
-                      fontSize: 10,
-                      color: Colors.grey
-                  ),
+                  style: TextStyle(fontSize: 10, color: Colors.grey),
                 ),
-
               ],
             ),
           ),

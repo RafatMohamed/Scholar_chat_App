@@ -14,6 +14,7 @@ import '../../../core/widget/default_material_button.dart';
 import '../../../core/widget/default_text_butt.dart';
 import '../../chat/views/chat_view.dart';
 import '../../login/views/login_view.dart';
+
 class RegisterView extends StatelessWidget {
   const RegisterView({super.key});
   @override
@@ -27,7 +28,9 @@ class RegisterView extends StatelessWidget {
           return Scaffold(
             body: Center(
               child: Padding(
-                padding:  EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.017),
+                padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.sizeOf(context).width * 0.017,
+                ),
                 child: SingleChildScrollView(
                   child: Form(
                     key: cubit.formKey,
@@ -56,35 +59,57 @@ class RegisterView extends StatelessWidget {
                           children: [
                             BlocConsumer<RegisterCubit, RegisterState>(
                               listener: (context, state) {
-                              if(state is RegisterSuccess){
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    NotifyApp.snackBar(widget:  Text("Sign up successfully ${cubit.emailController.text}, you can login now",style: TextStyle(color: AppConstant.primaryColor),)),
-                                    );
-                                NavigatorApp.pushPage(context, ChatView(email: cubit.emailController.text));}
-                              if(state is RegisterError){
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    NotifyApp.snackBar( widget:  Text(state.error,style: TextStyle(color: AppConstant.primaryColor),),),
-                                  snackBarAnimationStyle: AnimationStyle(curve: FlippedCurve(Curves.bounceIn),reverseCurve: Curves.bounceInOut,),
-                                );
-                              }
+                                if (state is RegisterSuccess) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    NotifyApp.snackBar(
+                                      widget: Text(
+                                        "Sign up successfully ${cubit.emailController.text}, you can login now",
+                                        style: TextStyle(
+                                          color: AppConstant.primaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                  NavigatorApp.pushPage(
+                                    context,
+                                    ChatView(email: cubit.emailController.text),
+                                  );
+                                }
+                                if (state is RegisterError) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    NotifyApp.snackBar(
+                                      widget: Text(
+                                        state.error,
+                                        style: TextStyle(
+                                          color: AppConstant.primaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                    snackBarAnimationStyle: AnimationStyle(
+                                      curve: FlippedCurve(Curves.bounceIn),
+                                      reverseCurve: Curves.bounceInOut,
+                                    ),
+                                  );
+                                }
                               },
                               builder: (context, state) {
                                 if (state is RegisterLoading) {
-                                return NotifyApp.circularProgress();
+                                  return NotifyApp.circularProgress();
                                 }
                                 return DefaultMaterialButton(
                                   onPressed: () {
-                                  if(cubit.formKey.currentState!.validate()){
-                                    cubit.register(
-                                      registerModel: RegisterModel(
-                                        email: cubit.emailController.text,
-                                        password: cubit.passwordController.text
-                                      )
-                                    );
-                                  }
-                                  else{
-                                    return null;
-                                  }
+                                    if (cubit.formKey.currentState!
+                                        .validate()) {
+                                      cubit.register(
+                                        registerModel: RegisterModel(
+                                          email: cubit.emailController.text,
+                                          password:
+                                              cubit.passwordController.text,
+                                        ),
+                                      );
+                                    } else {
+                                      return null;
+                                    }
                                   },
                                   text: "Sign up",
                                 );
@@ -104,7 +129,7 @@ class RegisterView extends StatelessWidget {
                                   onPressed: () {
                                     NavigatorApp.pushPage(
                                       context,
-                                    const   LoginView(),
+                                      const LoginView(),
                                     );
                                   },
                                   text: "Sign In",

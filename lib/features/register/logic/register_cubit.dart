@@ -24,26 +24,45 @@ class RegisterCubit extends Cubit<RegisterState> {
         email: emailAddress,
         password: password,
       );
-      emit(RegisterSuccess(registerModel: RegisterModel(email: emailAddress, password: password)));
+      emit(
+        RegisterSuccess(
+          registerModel: RegisterModel(email: emailAddress, password: password),
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         emit(RegisterError(error: "The password provided is too weak."));
         log('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        emit(RegisterError(error: "The account already exists for that email."));
+        emit(
+          RegisterError(error: "The account already exists for that email."),
+        );
         log('The account already exists for that email.');
       } else if (e.code == 'invalid-email') {
         emit(RegisterError(error: "The email address is badly formatted."));
         log('The email address is badly formatted.');
       } else if (e.code == 'operation-not-allowed') {
-        emit(RegisterError(error: "Email/password accounts are not enabled. Please check your Firebase authentication settings."));
+        emit(
+          RegisterError(
+            error:
+                "Email/password accounts are not enabled. Please check your Firebase authentication settings.",
+          ),
+        );
         log('Email/password accounts are not enabled.');
       } else {
-        emit(RegisterError(error: "An unknown error occurred. Please try again later."));
+        emit(
+          RegisterError(
+            error: "An unknown error occurred. Please try again later.",
+          ),
+        );
         log('Firebase Auth error: ${e.message}');
       }
     } on SocketException catch (e) {
-      emit(RegisterError(error: "No internet connection. Please check your network settings."));
+      emit(
+        RegisterError(
+          error: "No internet connection. Please check your network settings.",
+        ),
+      );
       log('Network error: $e');
     } catch (e) {
       emit(RegisterError(error: "Oops! Something went wrong: ${e.toString()}"));
