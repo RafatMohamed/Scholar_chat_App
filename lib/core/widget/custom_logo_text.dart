@@ -5,7 +5,7 @@ Widget customLogoText() {
   return Column(
     children: [
       Image.asset(AppConstant.kLogo, fit: BoxFit.fill),
-      Text(
+      const Text(
         AppConstant.appName,
         style: TextStyle(
           fontFamily: AppConstant.fontFamily,

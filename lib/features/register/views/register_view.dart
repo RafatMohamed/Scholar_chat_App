@@ -43,9 +43,9 @@ class RegisterView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           spacing: 10,
                           children: [
-                            Text(
+                            const Text(
                               "Sign UP",
-                              style: TextStyle(
+                              style:  TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -64,7 +64,7 @@ class RegisterView extends StatelessWidget {
                                     NotifyApp.snackBar(
                                       widget: Text(
                                         "Sign up successfully ${cubit.emailController.text}, you can login now",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: AppConstant.primaryColor,
                                         ),
                                       ),
@@ -80,13 +80,13 @@ class RegisterView extends StatelessWidget {
                                     NotifyApp.snackBar(
                                       widget: Text(
                                         state.error,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: AppConstant.primaryColor,
                                         ),
                                       ),
                                     ),
                                     snackBarAnimationStyle: AnimationStyle(
-                                      curve: FlippedCurve(Curves.bounceIn),
+                                      curve: const FlippedCurve(Curves.bounceIn),
                                       reverseCurve: Curves.bounceInOut,
                                     ),
                                   );
@@ -118,7 +118,7 @@ class RegisterView extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
+                                const Text(
                                   "Do you have an account?",
                                   style: TextStyle(
                                     fontSize: 16,

@@ -47,9 +47,9 @@ class LoginView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             spacing: 10,
                             children: [
-                              Text(
+                              const Text(
                                 "Sign In",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -92,7 +92,7 @@ class LoginView extends StatelessWidget {
                                         ),
                                       ),
                                       snackBarAnimationStyle: AnimationStyle(
-                                        curve: FlippedCurve(Curves.bounceIn),
+                                        curve: const FlippedCurve(Curves.bounceIn),
                                         reverseCurve: Curves.bounceInOut,
                                       ),
                                     );
@@ -123,7 +123,7 @@ class LoginView extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Don't have an account?",
                                     style: TextStyle(
                                       fontSize: 16,

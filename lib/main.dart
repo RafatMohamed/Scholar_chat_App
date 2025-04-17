@@ -22,8 +22,8 @@ class ChatApp extends StatelessWidget {
     return MaterialApp(
       title: AppConstant.appName,
       theme: ThemeData(
-        appBarTheme: AppBarTheme(color: AppConstant.primaryColor),
-        textTheme: TextTheme(bodyMedium: TextStyle(color: Colors.white)),
+        appBarTheme: const AppBarTheme(color: AppConstant.primaryColor),
+        textTheme: const TextTheme(bodyMedium: TextStyle(color: Colors.white)),
         scaffoldBackgroundColor: AppConstant.primaryColor,
       ),
       home: const LoginView(),

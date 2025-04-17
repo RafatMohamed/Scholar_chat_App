@@ -29,9 +29,9 @@ class ChatBubble extends StatelessWidget {
               isMe ? alignmentDirectional : AlignmentDirectional.centerStart,
           child: Container(
             constraints: BoxConstraints(maxWidth: sizeWidth * 0.6),
-            padding: EdgeInsetsDirectional.all(16),
+            padding: const EdgeInsetsDirectional.all(16),
             decoration: BoxDecoration(
-              color: isMe ? color : Color(0xff006D84),
+              color: isMe ? color : const Color(0xff006D84),
               borderRadius: BorderRadiusDirectional.only(
                 topEnd: border,
                 topStart: border,
@@ -55,13 +55,13 @@ class ChatBubble extends StatelessWidget {
                         locale: 'en_short',
                       )
                       : "just now",
-                  style: TextStyle(fontSize: 10, color: Colors.grey),
+                  style: const TextStyle(fontSize: 10, color: Colors.grey),
                 ),
               ],
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
       ],
     );
   }
