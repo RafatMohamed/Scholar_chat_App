@@ -2,16 +2,28 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/app_constant.dart';
 import '../../../../core/widget/chat_bubble_widget.dart';
 import '../../data/chat_model.dart';
-import '../chat_view.dart';
+import '../../model/chat_service.dart';
 
-class BuilderView extends StatelessWidget {
+class BuilderView extends StatefulWidget {
 
-  const BuilderView({super.key, required this.username, required this.border, required this.chatList, required this.email});
+  const BuilderView({super.key, required this.username, required this.border, required this.chatList, required this.email, required this.chatService,});
   final String username;
   final Radius border;
   final  List<ChatModel> chatList;
   final String email;
+  final ChatService chatService;
+  @override
+  State<BuilderView> createState() => _BuilderViewState();
+}
 
+class _BuilderViewState extends State<BuilderView> {
+  late final ChatService chatService;
+
+  @override
+  void initState() {
+    super.initState();
+    chatService = widget.chatService;
+  }
 
   @override
   Widget build(BuildContext context,) {
@@ -36,7 +48,7 @@ class BuilderView extends StatelessWidget {
                    SizedBox(
                      width: MediaQuery.of(context).size.width * 0.25,
                      child: Text(
-                       "Hi $username",
+                       "Hi ${widget.username}",
                        style: const TextStyle(
                          overflow: TextOverflow.ellipsis,
                          fontWeight: FontWeight.bold,
@@ -73,17 +85,16 @@ class BuilderView extends StatelessWidget {
                child: Padding(
                  padding: const EdgeInsets.all(16.0),
                  child: ListView.builder(
-                   key: ChatView.chatService.listKey,
-                   controller: ChatView.chatService.scrollController,
-                   itemCount: chatList.length,
+                   controller: chatService.scrollController,
+                   itemCount: widget.chatList.length,
                    itemBuilder: (context, index) {
                      return AnimatedBuilder(
-                       animation: ChatView.chatService.scrollController,
+                       animation: chatService.scrollController,
                        builder: (context, child) {
                          return ChatBubble(
-                           border: border,
-                           textSend: chatList[index],
-                           isMe: chatList[index].email ==email,
+                           border: widget.border,
+                           textSend: widget.chatList[index],
+                           isMe: widget.chatList[index].email ==widget.email,
                          );
                        },
                      );
@@ -105,14 +116,14 @@ class BuilderView extends StatelessWidget {
                  children: [
                    Expanded(
                      child: TextFormField(
-                       controller: ChatView.chatService.messageController,
+                       controller: chatService.messageController,
                        onFieldSubmitted: (value) {
                          if (value.trim().isNotEmpty) {
-                           ChatView.chatService.sendMessage(
+                           chatService.sendMessage(
                              messageReq: value.trim(),
-                             email: email,
+                             email: widget.email,
                            );
-                           ChatView.chatService.messageController.clear();
+                           chatService.messageController.clear();
                          }
                        },
                        style: const TextStyle(color: AppConstant.primaryColor),
@@ -132,17 +143,16 @@ class BuilderView extends StatelessWidget {
                      onPressed: () {
                        FocusManager.instance.primaryFocus?.unfocus();
                        final text =
-                       ChatView.chatService.messageController.text
+                       chatService.messageController.text
                            .trim();
                        if (text.isNotEmpty) {
-                         ChatView.chatService.sendMessage(
+                         chatService.sendMessage(
                            messageReq: text,
-                           email: email,
+                           email: widget.email,
                          );
-                         ChatView.chatService.messageController.clear();
-                         ChatView.chatService.scrollController.animateTo(
-                           ChatView
-                               .chatService
+                         chatService.messageController.clear();
+                         chatService.scrollController.animateTo(
+                               chatService
                                .scrollController
                                .position
                                .maxScrollExtent
@@ -167,5 +177,4 @@ class BuilderView extends StatelessWidget {
      ),
    );
   }
-
 }
