@@ -38,8 +38,8 @@ abstract class NotifyApp {
   static Widget circularProgress() {
     return const Center(
       child: CircularProgressIndicator(
-        backgroundColor: Colors.white,
-        color: AppConstant.primaryColor,
+        backgroundColor:  AppConstant.primaryColor,
+        color: Colors.white,
       ),
     );
   }
